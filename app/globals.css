@@ -1,0 +1,337 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0c0907;
+  --card: rgba(24, 17, 12, 0.78);
+  --card2: rgba(38, 28, 20, 0.88);
+  --fg: #f4ead8;
+  --muted: #a89882;
+  --accent: #c4844a;
+  --accent-soft: #e8c9a0;
+  --ok: #7ea36a;
+  --warn: #d4a574;
+  --red: #b54a3c;
+  --line: rgba(196, 132, 74, 0.32);
+  --ink: #0c0907;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-card2: var(--card2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-bad: var(--red);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-serif: var(--font-serif);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+  color-scheme: dark;
+  font-family: var(--font-body), "Barlow", system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+body {
+  min-height: 100dvh;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(1200px 700px at 50% -8%, rgba(196, 132, 74, 0.16), transparent 52%),
+    linear-gradient(180deg, rgba(12, 9, 7, 0.72), rgba(12, 9, 7, 0.94)),
+    var(--login-photo);
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 80;
+  opacity: 0.16;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.9  0 0 0 0 0.82  0 0 0 0 0.7  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.num {
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.display {
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.score {
+  font-family: var(--font-serif), "Fraunces", serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.kicker {
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.lede {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  max-width: 34ch;
+}
+
+.rx {
+  white-space: pre-line;
+  font-family: var(--font-serif), "Fraunces", serif;
+  font-size: 1.12rem;
+  line-height: 1.45;
+  color: var(--accent-soft);
+}
+
+.app-frame {
+  position: relative;
+  margin: 0 auto;
+  max-width: 32rem;
+  min-height: 100dvh;
+  padding-bottom: calc(6.5rem + env(safe-area-inset-bottom));
+}
+
+.page-hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 17.5rem;
+  overflow: hidden;
+  background-color: #1a120c;
+  background-size: cover;
+  background-position: center 30%;
+}
+
+.page-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(12, 9, 7, 0.18) 0%, rgba(12, 9, 7, 0.08) 38%, rgba(12, 9, 7, 0.92) 100%),
+    radial-gradient(80% 70% at 80% 20%, rgba(196, 132, 74, 0.18), transparent 60%);
+}
+
+.hero-back {
+  position: absolute;
+  top: calc(0.85rem + env(safe-area-inset-top));
+  left: 1.25rem;
+  z-index: 2;
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-soft);
+}
+
+.page-hero-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 17.5rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: calc(1.1rem + env(safe-area-inset-top)) 1.25rem 1.15rem;
+}
+
+.page-hero h1 {
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-size: clamp(2.6rem, 11vw, 3.4rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+.page-body {
+  position: relative;
+  z-index: 1;
+  padding: 0.85rem 1.15rem 0;
+}
+
+.auth-shell {
+  position: relative;
+  isolation: isolate;
+  min-height: 100dvh;
+  overflow: hidden;
+  background-color: #120c09;
+  background-size: cover;
+  background-position: center;
+}
+
+.auth-shell::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(12, 9, 7, 0.25) 0%, rgba(12, 9, 7, 0.15) 35%, rgba(12, 9, 7, 0.88) 72%, #0c0907 100%),
+    radial-gradient(70% 50% at 50% 80%, rgba(196, 132, 74, 0.18), transparent 70%);
+}
+
+.auth-copy {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  min-height: 100dvh;
+  max-width: 34rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem 1.4rem calc(2rem + env(safe-area-inset-bottom));
+}
+
+@media (min-width: 800px) {
+  .auth-copy {
+    max-width: 40rem;
+    padding: 2.5rem 4.5rem 4rem;
+  }
+}
+
+.auth-copy h1 {
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-size: clamp(3.4rem, 16vw, 5rem);
+  font-weight: 500;
+  line-height: 0.86;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.dock {
+  position: fixed;
+  left: 50%;
+  bottom: calc(0.7rem + env(safe-area-inset-bottom));
+  z-index: 40;
+  display: flex;
+  width: min(31rem, calc(100% - 1.4rem));
+  transform: translateX(-50%);
+  border: 1px solid var(--line);
+  background: rgba(16, 11, 8, 0.78);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(18px);
+}
+
+.dock a {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.18rem;
+  padding: 0.7rem 0.4rem 0.6rem;
+  color: var(--muted);
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.dock a.active {
+  color: var(--accent-soft);
+  background: linear-gradient(180deg, rgba(196, 132, 74, 0.18), transparent 78%);
+  box-shadow: inset 0 2px 0 var(--accent);
+}
+
+.dock svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+@utility btn {
+  @apply px-4 py-3 font-medium transition active:scale-[0.98] disabled:opacity-40;
+  font-family: var(--font-display), "Oswald", sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+@utility btn-primary {
+  @apply btn;
+  background: var(--accent);
+  color: var(--ink);
+  box-shadow: 0 10px 30px rgba(196, 132, 74, 0.28);
+}
+
+@utility btn-ghost {
+  @apply btn;
+  background: transparent;
+  color: var(--fg);
+  border-color: var(--line);
+}
+
+@utility btn-danger {
+  @apply btn;
+  background: transparent;
+  color: #f0c2bb;
+  border-color: rgba(181, 74, 60, 0.5);
+}
+
+@utility card {
+  position: relative;
+  padding: 1rem 1rem 1rem 1.05rem;
+  background:
+    linear-gradient(90deg, var(--accent), var(--accent)) 0 0 / 2px 100% no-repeat,
+    linear-gradient(180deg, rgba(42, 31, 22, 0.9), rgba(18, 13, 10, 0.72));
+  border: 1px solid rgba(232, 201, 160, 0.08);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+}
+
+@utility input {
+  @apply w-full px-0 py-3 text-fg outline-none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  font-family: var(--font-body), "Barlow", system-ui, sans-serif;
+}
+
+.input:focus {
+  border-bottom-color: var(--accent);
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  margin: 0;
+  border: 1px solid var(--accent);
+  background: transparent;
+  vertical-align: middle;
+}
+
+input[type="checkbox"]:checked {
+  background: var(--accent);
+  box-shadow: inset 0 0 0 2px var(--ink);
+}
+
+@utility chip {
+  @apply px-3 py-1.5 text-sm whitespace-nowrap;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-family: var(--font-display), "Oswald", sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(12, 9, 7, 0.35);
+}

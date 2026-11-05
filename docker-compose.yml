@@ -1,0 +1,17 @@
+# Minimal self-hosted setup. Copy .env.example to .env and set ORIGIN to the public https address.
+services:
+  wod-pr-tracker:
+    build:
+      context: .
+      args:
+        BASE_PATH: ${BASE_PATH:-}
+        APP_NAME: ${APP_NAME:-WOD PR Tracker}
+    restart: unless-stopped
+    environment:
+      ORIGIN: ${ORIGIN:?set ORIGIN in .env}
+      RP_ID: ${RP_ID:-}
+      TZ: ${TZ:-UTC}
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - ./data:/data
