@@ -13,6 +13,21 @@ file, no external services.
 - **Sign in with a password or a passkey.** Username or email as the login name; no mail server needed.
 - **Your data is yours:** one-click JSON export, plain SQLite underneath.
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/login.jpg" width="30%" alt="Sign in with a password or a passkey">
+  <img src="docs/screenshots/home.jpg" width="30%" alt="Favorites board with your current personal bests">
+  <img src="docs/screenshots/lifts.jpg" width="30%" alt="Lifts with separate 1RM, 3RM and 5RM">
+</p>
+<p align="center">
+  <img src="docs/screenshots/lift-detail.jpg" width="30%" alt="A lift: current PBs and the form to add a result">
+  <img src="docs/screenshots/history.jpg" width="30%" alt="Full history of a benchmark, with scaling and notes">
+  <img src="docs/screenshots/admin.jpg" width="30%" alt="Admin People tab: invite links and accounts">
+</p>
+
+*Demo data. Phone-first layout; works the same on a desktop browser.*
+
 ## Quick start
 
 ```bash
