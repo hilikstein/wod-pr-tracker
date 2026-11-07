@@ -1,6 +1,7 @@
 import { AccountClient } from "@/components/AccountClient";
 import { PageHero } from "@/components/PageHero";
 import { pageUser } from "@/lib/auth";
+import { listApiTokens } from "@/lib/tokens";
 import { listCredentials } from "@/lib/users";
 import { site } from "@/lib/site";
 
@@ -15,6 +16,7 @@ export default async function AccountPage() {
         <AccountClient
           hasPassword={user.has_password}
           passkeysEnabled={site.passkeys}
+          apiTokens={listApiTokens(user.id)}
           credentials={listCredentials(user.id).map((c) => ({ id: c.id, label: c.label, created_at: c.created_at, last_used_at: c.last_used_at }))}
         />
       </div>

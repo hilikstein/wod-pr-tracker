@@ -11,6 +11,7 @@ services:
       ORIGIN: ${ORIGIN:?set ORIGIN in .env}
       RP_ID: ${RP_ID:-}
       TZ: ${TZ:-UTC}
+      PR_BASIS: ${PR_BASIS:-latest}
     ports:
       - "127.0.0.1:3000:3000"
     volumes:

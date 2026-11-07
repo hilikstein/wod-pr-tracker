@@ -4,15 +4,18 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { api, BASE } from "./api";
 
+type ApiTokenRow = { id: number; label: string; created_at: string; last_used_at: string | null };
 type Cred = { id: string; label: string | null; created_at: string; last_used_at: string | null };
 
-export function AccountClient({ hasPassword, passkeysEnabled, credentials }: { hasPassword: boolean; passkeysEnabled: boolean; credentials: Cred[] }) {
+export function AccountClient({ hasPassword, passkeysEnabled, credentials, apiTokens }: { hasPassword: boolean; passkeysEnabled: boolean; credentials: Cred[]; apiTokens: ApiTokenRow[] }) {
   const router = useRouter();
   const [current, setCurrent] = useState("");
   const [next, setNext] = useState("");
   const [confirm, setConfirm] = useState("");
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
+  const [tokenLabel, setTokenLabel] = useState("");
+  const [newToken, setNewToken] = useState<string | null>(null);
 
   const run = async (fn: () => Promise<void>, okText: string) => {
     setBusy(true);
@@ -62,6 +65,29 @@ export function AccountClient({ hasPassword, passkeysEnabled, credentials }: { h
           }, "Passkey added.")}>Add a passkey on this device</button>
         </section>
       )}
+
+      <section className="card space-y-3">
+        <h2 className="display text-xl">App access tokens</h2>
+        <p className="text-sm text-muted">Let another app of yours read your lift numbers and latest WOD results (read-only). A token is shown once.</p>
+        {apiTokens.map((t) => (
+          <div key={t.id} className="flex items-center justify-between gap-3 text-sm">
+            <span className="min-w-0 truncate">{t.label} <span className="text-muted">· created {t.created_at.slice(0, 10)}{t.last_used_at ? ` · used ${t.last_used_at.slice(0, 10)}` : " · never used"}</span></span>
+            <button className="btn-ghost" disabled={busy} onClick={() => run(() => api(`/api/account/tokens/${t.id}`, "DELETE").then(() => undefined), "Token revoked.")}>Revoke</button>
+          </div>
+        ))}
+        <form className="flex gap-2" onSubmit={(e) => {
+          e.preventDefault();
+          run(async () => {
+            const r = await api<{ token: string }>("/api/account/tokens", "POST", { label: tokenLabel });
+            setNewToken(r.token);
+            setTokenLabel("");
+          }, "Token created. Copy it now.");
+        }}>
+          <input className="input" placeholder="What is it for? e.g. my gym app" value={tokenLabel} onChange={(e) => setTokenLabel(e.target.value)} required />
+          <button className="btn-ghost" disabled={busy}>Create</button>
+        </form>
+        {newToken && <code className="block break-all rounded bg-black/30 p-2 text-xs">{newToken}</code>}
+      </section>
 
       <section className="card space-y-3">
         <h2 className="display text-xl">Your data</h2>

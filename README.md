@@ -68,6 +68,7 @@ rate limit uses it.
 | `RP_ID` | runtime env | host of `ORIGIN` | Passkey domain; change only to share passkeys across subdomains |
 | `DB_PATH` | runtime env | `/data/wod-pr-tracker.db` in the image | SQLite file |
 | `TZ` | runtime env | `UTC` | Container time zone |
+| `PR_BASIS` | runtime env | `latest` | Which Rx 1RM other apps are given as your base: `latest` (most recent) or `max` (heaviest). Only entries marked Rx count |
 | `BASE_PATH` | **build** arg | empty | Mount below a path, e.g. `/pb` |
 | `APP_NAME` | **build** arg | `WOD PR Tracker` | Name in the UI and web manifest |
 | `PASSKEYS` | **build** arg | `on` | `off` hides passkey sign-in |
@@ -126,3 +127,12 @@ different version, is refused at start rather than guessed at; older databases n
 ## Licence
 
 MIT, see `LICENSE`. Image and trademark notes are in `NOTICE.md`.
+
+## Reading your numbers from another app
+
+Create a token under Account, "App access tokens" (shown once). Then:
+
+    GET /api/integrations/reference     Authorization: Bearer pbt_...
+
+returns, for that user only: every lift with its base 1RM (Rx entries only, chosen by `PR_BASIS`), latest 3RM and 5RM,
+and every named WOD with the latest result and its adaptations (or `null`). The token is read-only, one user, revocable.

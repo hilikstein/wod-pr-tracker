@@ -8,7 +8,7 @@ test("a new database gets the schema and its version", () => {
   initSchema(conn);
   assert.equal(conn.pragma("user_version", { simple: true }), SCHEMA_VERSION);
   const tables = (conn.prepare("SELECT name FROM sqlite_master WHERE type='table'").all() as { name: string }[]).map((t) => t.name);
-  for (const t of ["users", "credentials", "invites", "entries", "favorites", "custom_movements", "login_sessions"]) assert.ok(tables.includes(t), t);
+  for (const t of ["users", "credentials", "invites", "entries", "favorites", "custom_movements", "login_sessions", "api_tokens"]) assert.ok(tables.includes(t), t);
 });
 
 test("opening twice is fine", () => {
